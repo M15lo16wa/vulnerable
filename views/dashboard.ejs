@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Dashboard</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+
+<body>
+  <div class="container">
+    <h1>Dashboard</h1>
+    <p style="text-align: center; font-size: 1.1rem;">Welcome, <strong>
+        <%= user %>
+      </strong></p>
+    <% if (typeof error !=='undefined' && error) { %>
+      <p style="color: red;">
+        <%= error %>
+      </p>
+      <% } %>
+        <p>Your balance: <strong>
+            <%= balance %>
+          </strong></p>
+        <div style="margin-top: 1.5rem;">
+        </div>
+        <div style="margin-top: 1.5rem;">
+          <p>Votre solde : <strong>
+              <%= balance %>
+            </strong></p>
+        </div>
+
+        <!-- Formulaire pour déclarer le solde -->
+        <form method="POST" action="/mysolde" style="margin-top: 1.5rem;">
+          <label for="montant">Déclarer un solde :</label>
+          <input type="number" name="montant" id="montant" min="0" required>
+          <button type="submit" style="background: #12f377; color: white;">Déclarer</button>
+        </form>
+
+        <!-- Formulaire pour faire un transfert -->
+        <form method="POST" action="/montransfert" style="margin-top: 1.5rem;">
+          <label for="destinataire">Destinataire :</label>
+          <input type="text" name="destinataire" id="destinataire" required>
+          <label for="montantTransfert">Montant :</label>
+          <input type="number" name="montant" id="montantTransfert" min="1" required>
+          <button type="submit" style="background: #2ecc71; color: white;">Transférer</button>
+        </form>
+
+        <!-- Affichage des transferts -->
+        <div style="margin-top: 2rem;">
+          <h2>Mes transferts</h2>
+          <% if (typeof transferts !=='undefined' && transferts.length> 0) { %>
+            <ul>
+              <% transferts.forEach(function(t) { %>
+                <li>Vers <%= t.destinataire %> : <%= t.montant %>
+                </li>
+                <% }); %>
+            </ul>
+            <% } else { %>
+              <p>Aucun transfert effectué.</p>
+              <% } %>
+        </div>
+        <form method="POST" action="/logout" style="margin-top: 1rem;">
+          <button type="submit" style="background: #4974c8; color: #333;">Logout</button>
+        </form>
+  </div>
+</body>
+
+</html>
